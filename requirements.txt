@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+torch
+transformers
+openai-whisper
+huggingface_hub
+ffmpeg-python
+TikTokLive

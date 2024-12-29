@@ -90,3 +90,17 @@ class TikTokLiveHandler:
             logging.info(f"Commentaires sauvegardés dans {filename}")
         except Exception as e:
             logging.error(f"Erreur lors de la sauvegarde des commentaires : {e}")
+
+
+    def save_responses(self, responses, filename="responses.json"):
+        """
+        Sauvegarde les réponses générées dans un fichier JSON.
+        :param responses: Liste de réponses à sauvegarder.
+        :param filename: Nom du fichier pour stocker les réponses.
+        """
+        try:
+            with open(filename, "w") as f:
+                json.dump(responses, f, indent=4)
+            logging.info(f"Réponses sauvegardées dans {filename}")
+        except Exception as e:
+            logging.error(f"Erreur lors de la sauvegarde des réponses : {e}")

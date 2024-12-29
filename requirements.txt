@@ -6,3 +6,4 @@ openai-whisper
 huggingface_hub
 ffmpeg-python
 TikTokLive
+logging

@@ -67,6 +67,10 @@ class TikTokLiveHandler:
         Récupère les commentaires non traités.
         Retourne une liste de nouveaux commentaires et les marque comme traités.
         """
+        if not hasattr(self, "processed_comments"):
+            self.processed_comments = set()
+
+        logging.info(f"Total des commentaires reçus : {len(self.comments)}")
         new_comments = [
             comment for comment in self.comments
             if comment["comment"] not in self.processed_comments
@@ -100,7 +104,7 @@ class TikTokLiveHandler:
         """
         try:
             with open(filename, "w") as f:
-                json.dump(responses, f, indent=4)
+                json.dump(responses, f, indent=4, ensure_ascii=False)
             logging.info(f"Réponses sauvegardées dans {filename}")
         except Exception as e:
             logging.error(f"Erreur lors de la sauvegarde des réponses : {e}")

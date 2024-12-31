@@ -14,7 +14,7 @@ def format_prompt(comment: str) -> str:
     )
 
 if __name__ == "__main__":
-    username = "@lhommedepapier__"  # Remplacez par un utilisateur réel en live
+    username = "@subtiletvous_"  # Remplacez par un utilisateur réel en live
     model_name = "gpt-4"  # Modèle OpenAI
 
     # Initialisation des gestionnaires

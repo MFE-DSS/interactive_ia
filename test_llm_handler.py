@@ -4,8 +4,6 @@ import os
 
 # Récupérer la clé API
 api_key = os.getenv("OPENAI_API_KEY")
-print(f"Clé API récupérée : {api_key}")
-
 if not api_key:
     raise ValueError("La clé API OpenAI n'est pas définie dans l'environnement.")
 
@@ -15,11 +13,14 @@ if __name__ == "__main__":
 
     # Prompt de test
     prompt = "Écris un haïku sur la programmation."
-    logging.info(f"Envoi du prompt : {prompt}")
+    logging.info(f"Renvoie une réponse simple et écourtée : {prompt}")
 
-    # Générer une réponse
+    # Test de la réponse simple
     response = llm_handler.generate_response(prompt)
-    logging.info(f"Réponse de l'API : {response}")
+    print(f"Réponse simple : {response}")
 
-    # Afficher la réponse
-    print(f"Prompt : {prompt}\nRéponse : {response}")
+    # Test de la réponse en streaming
+    print("Réponse en streaming : ", end="")
+    for chunk in llm_handler.generate_response_stream(prompt):
+        print(chunk, end="")
+    print()

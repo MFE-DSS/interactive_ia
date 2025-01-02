@@ -2,7 +2,7 @@ from TikTokLive import TikTokLiveClient
 from TikTokLive.events import ConnectEvent, CommentEvent
 import asyncio
 import logging
-
+import json
 # Configuration des logs
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -16,6 +16,14 @@ class TikTokLiveHandler:
         self.username = username
         self.client = TikTokLiveClient(unique_id=username)
         self.comments = []  # Stocker les commentaires reçus
+        self.comment_listeners = []  # Liste des écouteurs de commentaires
+
+    def add_comment_listener(self, listener):
+        """
+        Ajoute un listener pour les commentaires.
+        :param listener: Fonction à appeler lorsqu'un commentaire est reçu.
+        """
+        self.comment_listeners.append(listener)
 
     async def on_connect(self, event: ConnectEvent):
         """
@@ -35,6 +43,10 @@ class TikTokLiveHandler:
         }
         self.comments.append(comment_data)  # Stocker le commentaire
         logging.info(f"Commentaire reçu - {event.user.nickname}: {event.comment}")
+
+        # Notifie tous les listeners des nouveaux commentaires
+        for listener in self.comment_listeners:
+            listener(comment_data)
 
     def start(self):
         """

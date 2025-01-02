@@ -65,3 +65,4 @@ class LLMHandler:
                 yield chunk.choices[0].delta.content or ""
         except Exception as e:
             logging.error(f"Erreur lors de la génération de la réponse en streaming : {e}")
+

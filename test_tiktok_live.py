@@ -58,7 +58,7 @@ async def process_comments(queue: Queue, llm_handler: LLMHandler):
 
 
 if __name__ == "__main__":
-    username = "@agence_atypique"  # Remplacez par un utilisateur réel en live
+    username = "@fredericbession"  # Remplacez par un utilisateur réel en live
     model_name = "gpt-4o-mini-2024-07-18"
 
     # Initialisation des gestionnaires

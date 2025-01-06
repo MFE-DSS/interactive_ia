@@ -21,27 +21,6 @@ class LLMHandler:
         self.client = OpenAI(api_key=self.api_key)
         logging.info(f"LLMHandler initialisé avec le modèle {self.model_name}.")
 
-    def generate_response(self, prompt: str) -> str:
-        """
-        Génère une réponse basée sur un prompt donné en utilisant l'API OpenAI.
-        :param prompt: Texte d'entrée pour le modèle.
-        :return: Réponse générée par le modèle.
-        """
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model_name,
-                messages=[
-                    {"role": "developer", "content": "Tu es un assistant amical et aidant."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                max_tokens=150,
-                top_p=0.9,
-            )
-            return response.choices[0].message.content.strip()
-        except Exception as e:
-            logging.error(f"Erreur lors de la génération de la réponse : {e}")
-            return "Je suis désolé, je ne peux pas répondre pour le moment."
 
     def generate_response_stream(self, prompt: str):
         """
@@ -65,4 +44,29 @@ class LLMHandler:
                 yield chunk.choices[0].delta.content or ""
         except Exception as e:
             logging.error(f"Erreur lors de la génération de la réponse en streaming : {e}")
+
+    def store_response(self, prompt: str, response: str):
+        """
+        Stocke un prompt et une réponse dans un fichier JSON.
+        :param prompt: Le prompt utilisé.
+        :param response: La réponse générée.
+        """
+        data = {"prompt": prompt, "response": response}
+
+        try:
+            if os.path.exists(self.storage_path):
+                with open(self.storage_path, "r", encoding="utf-8") as file:
+                    responses = json.load(file)
+            else:
+                responses = []
+
+            responses.append(data)
+
+            with open(self.storage_path, "w", encoding="utf-8") as file:
+                json.dump(responses, file, ensure_ascii=False, indent=4)
+
+            logging.info("Réponse stockée avec succès.")
+        except Exception as e:
+            logging.error(f"Erreur lors du stockage de la réponse : {e}")
+
 

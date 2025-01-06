@@ -53,12 +53,15 @@ async def process_comments(queue: Queue, llm_handler: LLMHandler):
 
             response = "".join(response_chunks)
             logging.info(f"Réponse générée : {response}")
+
+            # Stocker la réponse
+            llm_handler.store_response(prompt, response)
         else:
             await asyncio.sleep(1)  # Attendre avant de vérifier à nouveau la file
 
 
 if __name__ == "__main__":
-    username = "@fredericbession"  # Remplacez par un utilisateur réel en live
+    username = "@tonytuyisenge"  # Remplacez par un utilisateur réel en live
     model_name = "gpt-4o-mini-2024-07-18"
 
     # Initialisation des gestionnaires

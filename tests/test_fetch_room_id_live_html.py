@@ -1,4 +1,4 @@
-from todelete import FetchRoomIdLiveHTMLRoute  # Import de la classe modifiée
+from odelete import FetchRoomIdLiveHTMLRoute  # Import de la classe modifiée
 
 """"""
 def test_valid_sigi_state():

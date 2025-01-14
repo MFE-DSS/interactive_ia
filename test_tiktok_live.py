@@ -6,7 +6,7 @@ from queue import Queue
 from threading import Thread
 from api.tiktok_live import TikTokLiveHandler
 from api.llm_handler import LLMHandler
-from wav2lip.Wav2LipHandler import Wav2LipHandler
+from wav2Lip.Wav2LipHandler import Wav2LipHandler
 
 # Chemins des dossiers
 BASE_DIR = "interactive_ia"
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     # Initialisation des gestionnaires
     tiktok_handler = TikTokLiveHandler(username=username)
     llm_handler = LLMHandler(model_name=model_name)
-    wav2lip_handler = Wav2LipHandler(checkpoint_path="checkpoints/wav2lip.pth")
+    wav2lip_handler = Wav2LipHandler(checkpoint_path="wav2Lip/checkpoints/wav2lip.pth")
 
     # Création d'une file d'attente pour les commentaires
     comment_queue = Queue()

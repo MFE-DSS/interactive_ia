@@ -1,21 +1,57 @@
-from src.api.llm_handler import LLMHandler
-from src.api.tiktok_live import TikTokLiveHandler
-from src.wav2lip.Wav2LipHandler import Wav2LipHandler
+import os
+import pytest
 
-def test_pipeline():
+
+def test_project_structure():
+    """
+    Vérifie que les fichiers et dossiers clés existent.
+    """
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    required_files = [
+        os.path.join(base_dir, "README.md"),
+        os.path.join(base_dir, "requirements.txt"),
+        os.path.join(base_dir, "src", "api", "llm_handler.py"),
+        os.path.join(base_dir, "src", "api", "tiktok_live.py"),
+        os.path.join(base_dir, "src", "wav2Lip"),
+        os.path.join(base_dir, "tests", "unit", "test_llm_handler.py"),
+        os.path.join(base_dir, "tests", "unit", "test_tiktok_live.py"),
+        os.path.join(base_dir, "tests", "integration", "test_pipeline.py"),
+    ]
+
+    for file_path in required_files:
+        assert os.path.exists(file_path), f"Fichier ou dossier manquant : {file_path}"
+
+def test_imports():
+    """
+    Vérifie que les modules principaux peuvent être importés sans erreur.
+    """
+    try:
+        from src.api.llm_handler import LLMHandler
+        from src.api.tiktok_live import TikTokLiveHandler
+        from src.wav2Lip.Wav2LipHandler import Wav2LipHandler
+    except ImportError as e:
+        pytest.fail(f"Échec de l'importation : {e}")
+
+
+def test_pipeline(mock_openai_api, mock_tiktok_live_api):
+    """
+    Teste le pipeline complet avec des mocks pour OpenAI et TikTok Live.
+    """
+    from src.api.llm_handler import LLMHandler
+    from src.api.tiktok_live import TikTokLiveHandler
+
+    # Initialiser les gestionnaires
     llm_handler = LLMHandler(model_name="test-model")
-    #tiktok_handler = TikTokLiveHandler(username="@test_user")
-    wav2lip_handler = Wav2LipHandler(checkpoint_path="src/wav2lip/checkpoints/wav2lip.pth")
+    tiktok_handler = TikTokLiveHandler(username="@test_user")
 
-    # Simule un commentaire
-    comment = {"user": "test_user", "comment": "Bonjour, test !"}
-    prompt = f"Un utilisateur a dit : '{comment['comment']}'"
+    # Simuler un commentaire
+    tiktok_handler.start()
+    comments = tiktok_handler.get_comments()
+    assert len(comments) == 1
+    assert comments[0]["comment"] == "Commentaire simulé"
+
+    # Simuler une réponse
+    prompt = f"Un utilisateur a dit : '{comments[0]['comment']}'"
     response = llm_handler.generate_response(prompt)
+    assert response == "Réponse simulée"
 
-    # Génère un fichier audio
-    audio_path = "test_audio.wav"
-    llm_handler.text_to_speech(response, output_path=audio_path)
-
-    # Synchronise avec une vidéo
-    video_output = wav2lip_handler.sync_lips("test_video.mp4", audio_path)
-    assert video_output.endswith(".mp4")

@@ -1,4 +1,4 @@
-from src.wav2Lip.Wav2LipHandler import Wav2LipHandler
+from wav2Lip.Wav2LipHandler import Wav2LipHandler
 
 # Initialiser Wav2LipHandler
 handler = Wav2LipHandler(checkpoint_path="checkpoints/wav2lip.pth")

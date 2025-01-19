@@ -4,9 +4,10 @@ import random
 import os
 from queue import Queue
 from threading import Thread
-from src.api import TikTokLiveHandler
-from src.api import LLMHandler
-from src.wav2Lip.Wav2LipHandler import Wav2LipHandler
+
+from api.tiktok_live import TikTokLiveHandler
+from api.llm_handler import LLMHandler
+from wav2Lip.Wav2LipHandler import Wav2LipHandler
 
 # Chemins des dossiers
 BASE_DIR = "../../interactive_ia"
@@ -16,6 +17,20 @@ BASE_VIDEO = os.path.join(BASE_DIR, "asmr_girl.mp4")
 
 # Configuration des logs
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+
+
+def test_tiktok_live(mock_tiktok_live_api):
+    """
+    Teste la réception de commentaires avec TikTok Live simulé.
+    """
+    from api.tiktok_live import TikTokLiveHandler
+    handler = TikTokLiveHandler(username="@test_user")
+    handler.start()
+    comments = handler.get_comments()
+    assert len(comments) == 1
+    assert comments[0]["comment"] == "Commentaire simulé"
+
 
 def format_prompt(comment: str) -> str:
     """
@@ -84,7 +99,7 @@ if __name__ == "__main__":
     # Initialisation des gestionnaires
     tiktok_handler = TikTokLiveHandler(username=username)
     llm_handler = LLMHandler(model_name=model_name)
-    wav2lip_handler = Wav2LipHandler(checkpoint_path="../../src/wav2Lip/checkpoints/wav2lip.pth")
+    wav2lip_handler = Wav2LipHandler(checkpoint_path="../../wav2Lip/checkpoints/wav2lip.pth")
 
     # Création d'une file d'attente pour les commentaires
     comment_queue = Queue()

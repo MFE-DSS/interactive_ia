@@ -1,1 +1,18 @@
+# Fichiers Python compilés
+*.pyc
 __pycache__/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Dossiers générés
+results/
+audio/
+
+# Fichiers spécifiques au projet
+responses.json
+
+# Autres fichiers temporaires
+*.log
+

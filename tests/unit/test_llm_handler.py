@@ -1,6 +1,8 @@
-from api.llm_handler import LLMHandler
+from src.api import LLMHandler
 import logging
 import os
+
+#chatgpt as llm to handle
 
 # Récupérer la clé API
 api_key = os.getenv("OPENAI_API_KEY")

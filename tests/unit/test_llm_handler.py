@@ -17,7 +17,7 @@ def test_llm_response(mock_openai_api):
     """
     from src.api.llm_handler import LLMHandler
     handler = LLMHandler(model_name="test-model")
-    response = handler.generate_response("Test prompt")
+    response = handler.generate_response_stream("Test prompt")
     assert response == "Réponse simulée"
 
 def test_llm_stream_response(mock_openai_api):
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     logging.info(f"Renvoie une réponse simple et écourtée : {prompt}")
 
     # Test de la réponse simple
-    response = llm_handler.generate_response(prompt)
+    response = llm_handler.generate_response_stream(prompt)
     print(f"Réponse simple : {response}")
 
     # Test de la réponse en streaming

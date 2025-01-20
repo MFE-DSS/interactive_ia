@@ -7,4 +7,4 @@ huggingface_hub
 ffmpeg-python
 TikTokLive
 logging
-
+pytest

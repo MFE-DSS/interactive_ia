@@ -19,8 +19,8 @@ def mock_openai_api(monkeypatch):
         yield "Réponse simulée en streaming"
 
     # Remplacer les méthodes dans LLMHandler
-    monkeypatch.setattr("src.api.llm_handler.LLMHandler.generate_response", mock_generate_response)
-    monkeypatch.setattr("src.api.llm_handler.LLMHandler.generate_response_stream", mock_generate_response_stream)
+    monkeypatch.setattr("api.llm_handler.LLMHandler.test_llm_response", mock_generate_response)
+    monkeypatch.setattr("api.llm_handler.LLMHandler.test_llm_stream_response", mock_generate_response_stream)
 
 @pytest.fixture
 def mock_tiktok_live_api(monkeypatch):

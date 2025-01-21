@@ -32,7 +32,7 @@ def test_imports():
     except ImportError as e:
         pytest.fail(f"Échec de l'importation : {e}")
 
-"""
+
 def test_pipeline(mock_openai_api, mock_tiktok_live_api):
 
     #Teste le pipeline complet avec des mocks pour OpenAI et TikTok Live.
@@ -55,4 +55,3 @@ def test_pipeline(mock_openai_api, mock_tiktok_live_api):
     response = llm_handler.generate_response(prompt)
     assert response == "Réponse simulée"
 
-"""

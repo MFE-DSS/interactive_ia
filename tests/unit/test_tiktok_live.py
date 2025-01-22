@@ -33,30 +33,36 @@ def test_tiktok_live(mock_tiktok_live_api):
     assert comments[0]["comment"] == "Commentaire simulé"
 
 
-def format_prompt(comment: str) -> str:
+def test_comment_listeners(mock_tiktok_live_api):
     """
-    Formate le prompt pour fournir un contexte au modèle.
+    Teste que les listeners de commentaires sont appelés correctement.
     """
-    return (
-        f"Un utilisateur a laissé le commentaire suivant sur un live TikTok : '{comment}'. "
-        "Réponds de manière aimable et concise en tenant compte du contexte d'un live TikTok."
-    )
+    from src.api.tiktok_live import TikTokLiveHandler
 
-def listen_for_comments(handler: TikTokLiveHandler, queue: Queue):
-    """
-    Écoute les commentaires en continu et les ajoute dans une file d'attente.
-    """
-    def on_new_comment(comment):
-        queue.put(comment)
-        logging.info(f"Nouveau commentaire ajouté à la file d'attente : {comment}")
+    # Initialiser le gestionnaire
+    handler = TikTokLiveHandler(username="@test_user")
+    mock_comment = {"user": "test_user", "comment": "Test listener"}
 
-    handler.add_comment_listener(on_new_comment)
-    handler.start()
+    # Ajouter un listener
+    received_comments = []
+    handler.add_comment_listener(received_comments.append)
 
+    # Simuler un commentaire
+    handler.comments = [mock_comment]
+
+    # Notifier les listeners
+    for listener in handler.comment_listeners:
+        listener(mock_comment)
+
+    # Vérifier que le listener a bien reçu le commentaire
+    assert len(received_comments) == 1
+    assert received_comments[0] == mock_comment
+
+"""
 async def process_audio_response(queue: Queue, llm_handler: LLMHandler, wav2lip_handler: Wav2LipHandler):
-    """
-    Traite les commentaires pour générer des fichiers audio et des vidéos synchronisées.
-    """
+"""
+#Traite les commentaires pour générer des fichiers audio et des vidéos synchronisées.
+"""
     while True:
         if not queue.empty():
             comment = queue.get()
@@ -88,7 +94,7 @@ async def process_audio_response(queue: Queue, llm_handler: LLMHandler, wav2lip_
             logging.info(f"Vidéo générée : {video_output_path}")
         else:
             await asyncio.sleep(1)  # Attendre avant de vérifier à nouveau la file
-
+"""
 if __name__ == "__main__":
     # Vérifiez et créez les dossiers nécessaires
     os.makedirs(AUDIO_DIR, exist_ok=True)
@@ -100,7 +106,7 @@ if __name__ == "__main__":
     # Initialisation des gestionnaires
     tiktok_handler = TikTokLiveHandler(username=username)
     llm_handler = LLMHandler(model_name=model_name)
-    wav2lip_handler = Wav2LipHandler(checkpoint_path="../../wav2Lip/checkpoints/wav2lip.pth")
+    wav2lip_handler = Wav2LipHandler(checkpoint_path="src/wav2Lip/checkpoints/wav2lip.pth")
 
     # Création d'une file d'attente pour les commentaires
     comment_queue = Queue()

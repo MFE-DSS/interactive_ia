@@ -11,15 +11,6 @@ if not api_key:
     raise ValueError("La clé API OpenAI n'est pas définie dans l'environnement.")
 
 
-def test_llm_response(mock_openai_api):
-    """
-    Teste la génération de réponses avec OpenAI simulé.
-    """
-    from api.llm_handler import LLMHandler
-    handler = LLMHandler(model_name="test-model")
-    response = handler.generate_response_stream("Test prompt")
-    assert response == "Réponse simulée"
-
 def test_llm_stream_response(mock_openai_api):
     """
     Teste la génération de réponses en streaming avec OpenAI simulé.
@@ -40,9 +31,6 @@ if __name__ == "__main__":
     prompt = "Écris un haïku sur la programmation."
     logging.info(f"Renvoie une réponse simple et écourtée : {prompt}")
 
-    # Test de la réponse simple
-    response = llm_handler.generate_response_stream(prompt)
-    print(f"Réponse simple : {response}")
 
     # Test de la réponse en streaming
     print("Réponse en streaming : ", end="")

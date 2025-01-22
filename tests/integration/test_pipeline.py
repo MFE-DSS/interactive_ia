@@ -21,6 +21,7 @@ def test_project_structure():
     for file_path in required_files:
         assert os.path.exists(file_path), f"Fichier ou dossier manquant : {file_path}"
 
+
 def test_imports():
     """
     Vérifie que les modules principaux peuvent être importés sans erreur.
@@ -34,13 +35,13 @@ def test_imports():
 
 
 def test_pipeline(mock_openai_api, mock_tiktok_live_api):
-
-    #Teste le pipeline complet avec des mocks pour OpenAI et TikTok Live.
-
+    """
+    Teste le pipeline complet avec des mocks pour OpenAI et TikTok Live.
+    """
     from api.llm_handler import LLMHandler
     from api.tiktok_live import TikTokLiveHandler
 
-    # Initialiser les gestionnaires
+    # Initialiser les gestionnaires avec des mocks
     llm_handler = LLMHandler(model_name="test-model")
     tiktok_handler = TikTokLiveHandler(username="@test_user")
 
@@ -50,8 +51,9 @@ def test_pipeline(mock_openai_api, mock_tiktok_live_api):
     assert len(comments) == 1
     assert comments[0]["comment"] == "Commentaire simulé"
 
-    # Simuler une réponse
+    # Simuler une réponse avec le mock
     prompt = f"Un utilisateur a dit : '{comments[0]['comment']}'"
-    response = llm_handler.generate_response(prompt)
-    assert response == "Réponse simulée"
+    response_stream = list(llm_handler.generate_response_stream(prompt))
 
+    # Vérifier la réponse simulée
+    assert response_stream == ["Réponse simulée en streaming"]

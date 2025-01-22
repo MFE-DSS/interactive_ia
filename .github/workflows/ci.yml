@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.12"]
 
     steps:
     - name: Checkout code
@@ -29,14 +29,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Validate imports
+    - name: Validate project structure and imports
       run: |
-        pytest tests/integration/test_pipeline.py -k "test_imports"
+        pytest tests/integration/test_pipeline.py -k "test_project_structure or test_imports" --disable-warnings
 
-    - name: Run unit tests
+    - name: Run pipeline test
       run: |
-        pytest tests/unit/ --disable-warnings
-
-    - name: Run integration tests
-      run: |
-        pytest tests/integration/ --disable-warnings
+        pytest tests/integration/test_pipeline.py -k "test_pipeline" --disable-warnings

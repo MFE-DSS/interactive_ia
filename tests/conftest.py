@@ -34,5 +34,5 @@ def mock_tiktok_live_api(monkeypatch):
         return self.comments
 
     # Remplacer les méthodes dans TikTokLiveHandler
-    monkeypatch.setattr("src.api.tiktok_live.TikTokLiveHandler.start", mock_start)
-    monkeypatch.setattr("src.api.tiktok_live.TikTokLiveHandler.get_comments", mock_get_comments)
+    monkeypatch.setattr("api.tiktok_live.TikTokLiveHandler.start", mock_start)
+    monkeypatch.setattr("api.tiktok_live.TikTokLiveHandler.get_comments", mock_get_comments)

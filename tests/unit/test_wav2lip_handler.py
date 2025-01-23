@@ -1,11 +1,11 @@
 from wav2Lip.Wav2LipHandler import Wav2LipHandler
 
 # Initialiser Wav2LipHandler
-handler = Wav2LipHandler(checkpoint_path="wav2Lip/checkpoints/wav2lip.pth")
+handler = Wav2LipHandler(checkpoint_path="/home/martin/PycharmProjects/interactive_ia/src/wav2Lip/checkpoints/wav2lip.pth")
 
 # Fichiers pour le test
 video_path = "../ressources/video/asmr_girl.mp4"  # Vidéo d'entrée
-audio_path = "response_audio.wav"  # Audio généré
+audio_path = "tests/ressources/audio/output.mp4"  # Audio généré
 output_path = "results/output.mp4"  # Vidéo de sortie
 
 try:
@@ -14,3 +14,5 @@ try:
     print(f"Vidéo générée avec succès : {result_path}")
 except Exception as e:
     print(f"Erreur lors du test : {e}")
+
+Wav2LipHandler()

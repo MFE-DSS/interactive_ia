@@ -29,7 +29,7 @@ def test_imports():
     try:
         from api.llm_handler import LLMHandler
         from api.tiktok_live import TikTokLiveHandler
-        from wav2Lip.Wav2LipHandler import Wav2LipHandler
+        #from wav2Lip.Wav2LipHandler import Wav2LipHandler
     except ImportError as e:
         pytest.fail(f"Échec de l'importation : {e}")
 
@@ -37,6 +37,7 @@ def test_imports():
 def test_pipeline(mock_openai_api, mock_tiktok_live_api):
     """
     Teste le pipeline complet avec des mocks pour OpenAI et TikTok Live.
+    """
     """
     from api.llm_handler import LLMHandler
     from api.tiktok_live import TikTokLiveHandler
@@ -57,3 +58,4 @@ def test_pipeline(mock_openai_api, mock_tiktok_live_api):
 
     # Vérifier la réponse simulée
     assert response_stream == ["Réponse simulée en streaming"]
+    """

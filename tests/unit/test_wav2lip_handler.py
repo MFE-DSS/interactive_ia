@@ -1,7 +1,7 @@
 from wav2Lip.Wav2LipHandler import Wav2LipHandler
 
 # Initialiser Wav2LipHandler
-handler = Wav2LipHandler(checkpoint_path="checkpoints/wav2lip.pth")
+handler = Wav2LipHandler(checkpoint_path="wav2Lip/checkpoints/wav2lip.pth")
 
 # Fichiers pour le test
 video_path = "../ressources/video/asmr_girl.mp4"  # Vidéo d'entrée

@@ -38,7 +38,7 @@ def test_pipeline(mock_openai_api, mock_tiktok_live_api):
     """
     Teste le pipeline complet avec des mocks pour OpenAI et TikTok Live.
     """
-    """
+    """ 
     from api.llm_handler import LLMHandler
     from api.tiktok_live import TikTokLiveHandler
 

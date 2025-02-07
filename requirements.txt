@@ -9,3 +9,4 @@ TikTokLive
 logging
 pytest
 openai
+pandas
